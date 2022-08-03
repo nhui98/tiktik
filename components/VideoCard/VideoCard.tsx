@@ -72,7 +72,7 @@ export default function VideoCard({ post }: IProps) {
           }}
         >
           {post.video?.asset && (
-            <Link href="/">
+            <Link href={`/detail/${post._id}`}>
               <video
                 src={post.video.asset.url}
                 loop
