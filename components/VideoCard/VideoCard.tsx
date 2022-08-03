@@ -4,7 +4,7 @@ import { BsFillPlayFill, BsFillPauseFill, BsPlay } from "react-icons/bs";
 import { GoVerified } from "react-icons/go";
 import Link from "next/link";
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface IProps {
   post: Video;
@@ -27,12 +27,18 @@ export default function VideoCard({ post }: IProps) {
     }
   };
 
+  useEffect(() => {
+    if (videoRef?.current) {
+      videoRef.current.muted = isVideoMuted;
+    }
+  }, [isVideoMuted]);
+
   return (
     <div className="flex flex-col border-b-2 border-gray-200 pb-6">
       <div>
         <div className="flex cursor-pointer gap-3 rounded p-2 font-semibold">
           <div className="h-10 w-10 md:h-16 md:w-16">
-            <Link href="/">
+            <Link href={`/profile/${post.postedBy._id}`}>
               <>
                 <Image
                   width={62}
@@ -46,7 +52,7 @@ export default function VideoCard({ post }: IProps) {
             </Link>
           </div>
           <div className="">
-            <Link href="/">
+            <Link href={`/profile/${post.postedBy._id}`}>
               <div className="flex items-center gap-2">
                 <p className="md:text-md flex items-center gap-2 font-bold text-primary">
                   {post.postedBy.userName}{" "}
@@ -76,8 +82,8 @@ export default function VideoCard({ post }: IProps) {
               <video
                 src={post.video.asset.url}
                 loop
-                className="h-[300px] w-[200px] cursor-pointer rounded-2xl bg-gray-100 md:h-[400px] lg:h-[530px] lg:w-[600px]"
                 ref={videoRef}
+                className="h-[300px] w-[200px] cursor-pointer rounded-2xl bg-gray-100 md:h-[400px] lg:h-[530px] lg:w-[600px]"
               />
             </Link>
           )}
