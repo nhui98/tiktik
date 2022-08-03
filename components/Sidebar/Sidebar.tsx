@@ -4,14 +4,15 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { AiFillHome, AiOutlineMenu } from "react-icons/ai";
 import { ImCancelCircle } from "react-icons/im";
+import useAuthStore from "../../store/authStore";
 import Discover from "../Discover/Discover";
 import Footer from "../Footer/Footer";
 import SuggestedAccounts from "../SuggestAccounts/SuggestedAccounts";
 
 export default function Sidebar() {
   const [showSidebar, setShowSidebar] = useState(true);
-
-  const userProfile = false;
+  const { fetchAllUsers, allUsers }: any = useAuthStore();
+  const { pathname } = useRouter();
 
   const normalLink =
     "flex item-center gap-3 hover:bg-primary p-3 xl:justify-center cursor-pointer font-semibold text-[#F51997] rounded";
@@ -37,7 +38,10 @@ export default function Sidebar() {
             </Link>
           </div>
           <Discover />
-          <SuggestedAccounts />
+          <SuggestedAccounts
+            fetchAllUsers={fetchAllUsers}
+            allUsers={allUsers}
+          />
           <Footer />
         </div>
       )}
